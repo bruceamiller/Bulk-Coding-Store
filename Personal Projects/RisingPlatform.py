@@ -18,7 +18,9 @@ wallbuffer = screenHeight // 100
 platformWidth = screenHeight // 10
 platformDepth = screenHeight // 200
 platformDistance = screenHeight // 6
-platformTypes = ['normal'] * 20 + ['moving1', 'moving2', 'falling0'] * 3 + ['bounce']
+#platformTypes = ['normal'] * 20 + ['moving1', 'moving2', 'falling0'] * 3 + ['bounce']
+platformTypes = ['normal', 'moving1', 'moving2', 'falling0', 'bounce']
+platformWeights = [20, 3, 3, 3, 1]
 
 playerSize = [screenHeight // 20, screenHeight // 10]
 
@@ -32,7 +34,7 @@ def getPlatformHorizontal():
     return random.randint(wallbuffer, screenWidth - wallbuffer - platformWidth)
 
 def getPlatformType():
-    return random.choice(platformTypes)
+    return random.choices(platformTypes, platformWeights, k=1)[0]
 
 
 def closestPlatform(playerInfo, platforms):
@@ -102,7 +104,6 @@ def movePlayer(playerInfo, move, platforms):
         playerInfo[1] = platform[1] + playerSize[1] // 2
         if platform[2] == 'falling0':
             platforms[platforms.index(platform)][2] = 'falling1'
-            print(platforms, platforms.index(platform))
     else:
         playerInfo[1] = displacement(playerInfo[1], playerInfo[2])
     if 'UP' in move and onPlatformX(playerInfo, platform) and platform == closestPlatform(playerInfo, platforms) and onPlatformY(playerInfo, platform) and platform[2] == 'falling1':
