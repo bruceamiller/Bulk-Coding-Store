@@ -24,7 +24,8 @@ def getScores():
     #
     file = open("C:\\Users\\Bruce\\Desktop\\Python Coding\\Class Projects\\1300 - MP4 Data.txt")
     lines = file.readlines()
-    lines[len(lines)-1] += "\n" #last character in last line is not "\n" (FIX)
+    file.close()
+    lines[len(lines)-1] += "\n" # adds missing "\n" at end of last line
     classInfo = [[] for i in range(len(lines))]
     string = ""
     for i, currentLine in enumerate(lines):
