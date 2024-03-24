@@ -94,7 +94,8 @@ def makeBarn():
     roofFlat.setBorderWidth(20)
     barn.add(roofFlat)
 
-    door = Path(Point(1125, 465), Point(1125, 290), Point(1275, 290), Point(1275, 465), Point(1125, 465), Point(1275, 290), Point(1125, 290), Point(1275, 465))
+    door = Path(Point(1125, 465), Point(1125, 290), Point(1275, 290), Point(1275, 465), 
+                Point(1125, 465), Point(1275, 290), Point(1125, 290), Point(1275, 465))
     door.setBorderColor('white')
     door.setBorderWidth(20)
     barn.add(door)
@@ -112,7 +113,8 @@ def makeClouds():
     puff.setBorderColor('lightGray')
     cloud.add(puff)
     
-    puffPositions = [[0,0], [15,15], [30,25], [50,30], [70,25], [85,15], [100, 0], [100,-20], [0,-20], [15,-35], [30,-45], [50,-50], [70,-45], [85,-35], [100,-20]]
+    puffPositions = [[0,0], [15,15], [30,25], [50,30], [70,25], [85,15], [100, 0], [100,-20], 
+                     [0,-20], [15,-35], [30,-45], [50,-50], [70,-45], [85,-35], [100,-20]]
     for centerPoint in puffPositions:
         puff = Circle(20, Point(centerPoint[0], centerPoint[1]))
         puff.setFillColor('white')
@@ -126,6 +128,16 @@ def makeClouds():
         cloud.move(100, 0)
         myWorld.add(cloud)
 
+def makeMud():
+    mud = Layer()
+
+    spot = Ellipse(200, 100, Point(400, 700))
+    spot.setFillColor((54, 40, 26))
+    spot.setBorderColor((54, 40, 26))
+    mud.add(spot)
+
+    return mud
+
 
 def makeChicken():
     chicken = Layer()
@@ -137,7 +149,8 @@ def makeChicken():
     wing = Polygon(Point(10, -5), Point(-10, 0), Point(10, 5))
     chicken.add(wing)
 
-    leg1 = Path(Point(-10, 20), Point(-10, 30), Point(-15, 35), Point(-10, 30), Point(-10, 37), Point(-10, 30), Point(-4, 35))
+    leg1 = Path(Point(-10, 20), Point(-10, 30), Point(-15, 35), Point(-10, 30), 
+                Point(-10, 37), Point(-10, 30), Point(-4, 35))
     leg1.setBorderColor((191, 105, 0))
     leg1.setBorderWidth(3)
     chicken.add(leg1)
@@ -156,11 +169,60 @@ def makeChicken():
     headRig.add(beak)
     headRig.rotate(40)
 
+    eye = Circle(0.55, Point(30, -25))
+    headRig.add(eye)
+
     chicken.add(headRig)
 
     chicken.move(1000, 500)
 
     return chicken, headRig
+
+def makePig():
+    pig = Layer()
+
+    body = Ellipse(100, 50)
+    body.setFillColor('pink')
+    body.setBorderColor('pink')
+    pig.add(body)
+
+    tail = Path(Point(-40, 0), Point(-70,-30))#, Point(-80, -20), Point(-, -10))
+    tail.setBorderColor((255, 132, 200))
+    tail.setBorderWidth(3)
+    pig.add(tail)
+
+    head = Ellipse(50, 40, Point(40, -20))
+    head.setFillColor('pink')
+    pig.add(head)
+
+    nose = Ellipse(10, 8, Point(40, -20))
+    pig.add(nose)
+    nostril = Circle(0.55, Point(38, -20))
+    pig.add(nostril)
+    nostril = nostril.clone()
+    nostril.move(4, 0)
+    pig.add(nostril)
+
+    eye = Circle(0.55, Point(30, -30))
+    pig.add(eye)
+    eye = eye.clone()
+    eye.move(20, 0)
+    pig.add(eye)
+
+    mouth = Circle(0.55, Point(40, -10))
+    pig.add(mouth)
+
+    leg1 = Rectangle(10, 20, Point(-40, 20))
+    leg1.setFillColor('pink')
+    #leg1.setBorderColor('pink')
+    leg1.adjustReference(0, -10)
+    pig.add(leg1)
+
+    leg2 = leg1.clone()
+    leg2.move(80, 0)
+    pig.add(leg2)
+    
+    return pig, leg1, leg2, tail
 
 def swingObject(object, direction, speed, rotatePos, limit):
     if direction == 'right':
@@ -190,9 +252,14 @@ myWorld.add(makeHills())
 myWorld.add(makeGrass())
 myWorld.add(makeFence())
 myWorld.add(makeBarn())
+myWorld.add(makeMud())
 
 chicken, headRig = makeChicken()
 myWorld.add(chicken)
+
+pig, leg1, leg2, tail = makePig()
+myWorld.add(pig)
+pig.move(-100, 700)
 
 ### Animate
 timeDelay = 1 / 30 # 30 fps
@@ -205,13 +272,65 @@ chickHeadRotatePos = 0
 chickWaddleDir = 'right'
 chickWaddlePos = 0
 
-while loopFrames:
-    chickWaddleDir, chickWaddlePos = swingObject(chicken, chickWaddleDir, 1, chickWaddlePos, 2)
-    chickHeadDir, chickHeadRotatePos = swingObject(headRig, chickHeadDir, 2, chickHeadRotatePos, 15)
+leg1Dir = 'right'
+leg1RotatePos = 0
+
+leg2Dir = 'left'
+leg2RotatePos = 0
+
+tailDir = 'right'
+tailRotatePos = 0
+
+needsWorm = True
+
+while loopFrames:    
+    if not sceneLength <=  2 and sceneLength <= 3:
+        pig.move(10, 0) 
+        pig.move(0, -10)
+        tailDir, tailRotatePos = swingObject(tail, tailDir, 5, tailRotatePos, 10)
+        chickWaddleDir, chickWaddlePos = swingObject(chicken, chickWaddleDir, 1, chickWaddlePos, 2)
+        chickHeadDir, chickHeadRotatePos = swingObject(headRig, chickHeadDir, 2, chickHeadRotatePos, 15)
+        leg1.rotate(-60)
+        leg2.rotate(60)
+        if needsWorm:
+                worm = Path(Point(0, 0), Point(0, 5), Point(5, -5), Point(10, -5), Point(10, -10))
+                worm.setBorderColor('pink')
+                worm.setBorderWidth(2)
+                worm.move(55, -30)
+                headRig.add(worm)
+                needsWorm = False
+    elif not sceneLength <= 3 and sceneLength <= 4:
+        pig.move(10, 0)
+        pig.move(0, 5)
+        tailDir, tailRotatePos = swingObject(tail, tailDir, 5, tailRotatePos, 10)
+        chickWaddleDir, chickWaddlePos = swingObject(chicken, chickWaddleDir, 1, chickWaddlePos, 2)
+        chickHeadDir, chickHeadRotatePos = swingObject(headRig, chickHeadDir, 2, chickHeadRotatePos, 15)
+        leg1.rotate(-60)
+        leg2.rotate(60)
+    elif not sceneLength <= 4 and sceneLength <= 4.25:
+        pig.move(0, -40)
+        tailDir, tailRotatePos = swingObject(tail, tailDir, 5, tailRotatePos, 10)
+        headRig.rotate(-11)
+        leg1.rotate(-60)
+        leg2.rotate(60)
+    elif not sceneLength <= 4.25 and sceneLength <= 4.75:
+        pig.move(0, -40)
+        tailDir, tailRotatePos = swingObject(tail, tailDir, 5, tailRotatePos, 10)
+        headRig.rotate(-0.25)
+        leg1.rotate(-60)
+        leg2.rotate(60)
+    elif not sceneLength <= 4.75:
+        headRig.rotate(-0.25)
+    else:
+        pig.move(10, 0) 
+        chickWaddleDir, chickWaddlePos = swingObject(chicken, chickWaddleDir, 1, chickWaddlePos, 2)
+        chickHeadDir, chickHeadRotatePos = swingObject(headRig, chickHeadDir, 2, chickHeadRotatePos, 15)
+        leg1Dir, leg1RotatePos = swingObject(leg1, leg1Dir, 15, leg1RotatePos, 45)
+        leg2Dir, leg2RotatePos = swingObject(leg2, leg2Dir, 15, leg2RotatePos, 45)
 
     sleep(timeDelay)
-    sceneLength += 0.0333
+    sceneLength += timeDelay
 
-    if sceneLength >= 5:
+    if sceneLength >= 10:
         loopFrames = False
 
