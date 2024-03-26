@@ -265,7 +265,6 @@ pig.move(-100, 700)
 timeDelay = 1 / 30 # 30 fps
 sceneLength = 0 # seconds
 
-loopFrames = True
 chickHeadDir = 'right'
 chickHeadRotatePos = 0
 
@@ -283,6 +282,7 @@ tailRotatePos = 0
 
 needsWorm = True
 
+loopFrames = True
 while loopFrames:    
     if not sceneLength <=  2 and sceneLength <= 3:
         pig.move(10, 0) 
@@ -292,13 +292,6 @@ while loopFrames:
         chickHeadDir, chickHeadRotatePos = swingObject(headRig, chickHeadDir, 2, chickHeadRotatePos, 15)
         leg1.rotate(-60)
         leg2.rotate(60)
-        if needsWorm:
-                worm = Path(Point(0, 0), Point(0, 5), Point(5, -5), Point(10, -5), Point(10, -10))
-                worm.setBorderColor('pink')
-                worm.setBorderWidth(2)
-                worm.move(55, -30)
-                headRig.add(worm)
-                needsWorm = False
     elif not sceneLength <= 3 and sceneLength <= 4:
         pig.move(10, 0)
         pig.move(0, 5)
@@ -328,9 +321,17 @@ while loopFrames:
         leg1Dir, leg1RotatePos = swingObject(leg1, leg1Dir, 15, leg1RotatePos, 45)
         leg2Dir, leg2RotatePos = swingObject(leg2, leg2Dir, 15, leg2RotatePos, 45)
 
+    if sceneLength >= 1.75 and needsWorm:
+        worm = Path(Point(0, 0), Point(0, 5), Point(5, -5), Point(10, -5), Point(10, -10))
+        worm.setBorderColor('pink')
+        worm.setBorderWidth(2)
+        worm.move(55, -30)
+        headRig.add(worm)
+        needsWorm = False
+
     sleep(timeDelay)
     sceneLength += timeDelay
 
-    if sceneLength >= 10:
+    if sceneLength >= 9.5:
         loopFrames = False
 
