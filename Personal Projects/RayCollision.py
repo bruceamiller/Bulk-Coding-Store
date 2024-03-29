@@ -1,18 +1,23 @@
 import pygame, sys, math, random
 
-HEIGHT = 1000
-WIDTH = 2000
+render3D = True
+renderMaze = False
+
+HEIGHT = 800
+WIDTH = 1600
 
 def printScreen():
     screen.fill(pygame.Color('black'))
-    pygame.draw.rect(screen, pygame.Color((15, 15, 15)), pygame.Rect(0, 0, WIDTH, HEIGHT // 2))
-    for w in walls:
-        pygame.draw.rect(screen, pygame.Color((w[1], w[1], w[1])), w[0])
-    pygame.draw.rect(screen, pygame.Color('white'), pygame.Rect(viewPoint[0] - playerSize // 2, viewPoint[1] - playerSize // 2, playerSize, playerSize), 3)
-    for r in rays:
-        pygame.draw.line(screen, pygame.Color('white'), viewPoint, r[:2], 3)
-    for line in lines:
-        pygame.draw.line(screen, pygame.Color('white'), line[0], line[1], 2)
+    if render3D:
+        pygame.draw.rect(screen, pygame.Color((30, 30, 30)), pygame.Rect(0, 0, WIDTH, HEIGHT // 2))
+        for w in walls:
+            pygame.draw.rect(screen, pygame.Color((w[1], w[1], w[1])), w[0])
+    if renderMaze:
+        pygame.draw.rect(screen, pygame.Color('white'), pygame.Rect(viewPoint[0] - playerSize // 2, viewPoint[1] - playerSize // 2, playerSize, playerSize), 3)
+        for r in rays:
+            pygame.draw.line(screen, pygame.Color('white'), viewPoint, r[:2], 3)
+        for line in lines:
+            pygame.draw.line(screen, pygame.Color('white'), line[0], line[1], 2)
     pygame.display.update()
 
 
@@ -60,8 +65,8 @@ def getMaze():
     rightPadding = WIDTH // 16
     downPadding = WIDTH // 16
     upPadding = WIDTH // 16
-    hCells = 20
-    vCells = 10
+    hCells = 19
+    vCells = 9
     
     for row in range(vCells + 1):
         for hWall in range(hCells):
@@ -156,7 +161,7 @@ def getY_Intercept(slope):
     return y_intercept
 
 FOV = 120
-rayNum = 60
+rayNum = 40
 lineEndPoint = [0, 0]
 rays = []
 for r in range(rayNum): #Ray: [endpoint_x endpoint_y, angle, rayDistance]
@@ -187,10 +192,6 @@ pygame.display.set_caption('Ray Collision')
 
 viewDistance = 1000
 wallColor = 255 # for graphics
-
-
-
-
 
 playerSize = 20
 framerate = 60
