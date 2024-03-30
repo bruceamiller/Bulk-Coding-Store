@@ -176,7 +176,7 @@ def getWalls():
         wallWidth = WIDTH // rayNum
         wallHeight = HEIGHT * ((wallDepth) / 255)
         
-        wallLeft = wallWidth * (rayNum - i)
+        wallLeft = wallWidth * (rayNum - i - 1)
         wallTop = (HEIGHT - wallHeight) / 2
 
         
