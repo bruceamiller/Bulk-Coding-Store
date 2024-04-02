@@ -4,20 +4,19 @@
 # Bruce Miller
 #
 # Description: This script will use the cs1graphics module to create a graphics
-# scene and then animate the scene. The initial scene has a sun, a
-# cloud, a tree, and a bull. The sun is a Circle, the cloud is a
-# Polygon, the tree and bull use the Layer class to combine
-# multiple objects. When the animation starts, a second bull
-# enters the scene and butts the first bull into the air and off
-# the screen. Meanwhile, the sun and cloud are moving across the
-# sky, and the tree leaves are growing.
-
+# scene and then animate the scene. The intial scene has a farm-themed background and a chicken.
+# The chicken pecks the ground until it gets a worm, as a pig comes on screen. The pig begins to fly, 
+# and the chicken watches it fly higher an higher.
 #
 
 from cs1graphics import *
 from time import sleep
 
 def makeHills():
+    #
+    # No parameters, returns 2 big green circles in background
+    #
+
     hills = Layer()
 
     hill1 = Circle(1250, Point(1200, 1550))
@@ -43,7 +42,7 @@ def makeGrass():
 
 def makeSun():
     #
-    # No parameters, returns yellow circle at top of screen
+    # No parameters, returns yellow circle at top-left of screen
     #
     sun = Circle(50, Point(100,100))
     sun.setFillColor('yellow')
@@ -53,7 +52,7 @@ def makeSun():
 def makeFence():
     #
     # Define amount of fencePosts, fence boardWidth, etc.
-    # Add each fenceposts to layer from calculated position.
+    # Add fenceposts to layer from calculated position.
     # No parameters, returns fence layer.
     #
     fencePosts = 9
@@ -74,6 +73,10 @@ def makeFence():
     return fence
 
 def makeBarn():
+    #
+    # Construct barn from shapes and lines
+    # No parameters, returns barn layer
+    #
     barn = Layer()
 
     barnBack = Square(250, Point(1200, 350))
@@ -103,6 +106,10 @@ def makeBarn():
     return barn
 
 def makeClouds():
+    #
+    # Construct cloud layer edge via circles and fill with ellipse
+    # No parameters, returns cloud layer
+    #
     cloud = Layer()
     myWorld.add(cloud)
 
@@ -129,6 +136,10 @@ def makeClouds():
         myWorld.add(cloud)
 
 def makeMud():
+    #
+    # Construct mud layer with ellipses
+    # No parameters, returns mud layer
+    #
     mud = Layer()
 
     spot = Ellipse(200, 100, Point(400, 700))
@@ -136,10 +147,29 @@ def makeMud():
     spot.setBorderColor((54, 40, 26))
     mud.add(spot)
 
+    spot1 = Ellipse(125, 60, Point(450, 750))
+    spot1.setFillColor((54, 40, 26))
+    spot1.setBorderColor((54, 49, 26))
+    mud.add(spot1)
+    
+    spot2 = Ellipse(200, 100, Point(395, 705))
+    spot2.setFillColor((120, 62, 34))
+    spot2.setBorderColor((54, 40, 26))
+    mud.add(spot2)
+
+    spot3 = Ellipse(125, 60, Point(445, 755))
+    spot3.setFillColor((120, 62, 34))
+    spot3.setBorderColor((54, 49, 26))
+    mud.add(spot3)
+
     return mud
 
 
 def makeChicken():
+    #
+    # Construct chicken head and body and connect together
+    # No parameters, returns: whole chicken layer, chicken head
+    #
     chicken = Layer()
     
     chickBody = Circle(25)
@@ -179,6 +209,10 @@ def makeChicken():
     return chicken, headRig
 
 def makePig():
+    #
+    # Construct pig layer, setup legs for rotation
+    # No parameters, returns: pig layer, two legs, & tail
+    #
     pig = Layer()
 
     body = Ellipse(100, 50)
@@ -214,7 +248,6 @@ def makePig():
 
     leg1 = Rectangle(10, 20, Point(-40, 20))
     leg1.setFillColor('pink')
-    #leg1.setBorderColor('pink')
     leg1.adjustReference(0, -10)
     pig.add(leg1)
 
@@ -225,15 +258,18 @@ def makePig():
     return pig, leg1, leg2, tail
 
 def swingObject(object, direction, speed, rotatePos, limit):
+    #
+    # rotate / "swing" object back and forth according to parameters
+    # Takes parameters: object to rotate, which direction it is rotating,
+    # speed of rotation, position of rotation, and limit of rotation.
+    # Returns: rotation direction (changes if object rotates past its limit), position in rotation
+    #
     if direction == 'right':
         object.rotate(speed)
         rotatePos += speed
     elif direction == 'left':
         object.rotate(-speed)
         rotatePos -= speed
-    elif direction == 'stop':
-        object.rotate(-rotatePos)
-        rotatePos = 0
     if rotatePos >= limit:
         direction = 'left'
     elif rotatePos <= -limit:
@@ -283,7 +319,7 @@ tailRotatePos = 0
 needsWorm = True
 
 loopFrames = True
-while loopFrames:    
+while loopFrames:
     if not sceneLength <=  2 and sceneLength <= 3:
         pig.move(10, 0) 
         pig.move(0, -10)
