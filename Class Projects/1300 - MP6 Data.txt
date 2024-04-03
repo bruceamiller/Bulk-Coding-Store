@@ -1,0 +1,9 @@
+VK174 Virat Kohli 85 92
+RS583 Rohit Sharma 56 43 92 73
+KR629 KL Rahul 87 94 68
+JB175 Jasprit Bumrah 90 45 89
+HP301 Hardik Pandya 88 97 78 100 34
+KY886 Kuldeep Yadav 82 76 95 86
+RJ570 Ravindra Jadeja 67 98
+MD892 MS Dhoni
+RP561 Rishabh Pant 45 78 89
