@@ -7,8 +7,13 @@ from MP7_StudentClass import Student
 #
 # Description:
 #
-# Get studentd ID, name, testScores, and testAvg
-# Print everything in organized & labeled lines
+# Get info from txt data and create student objects with: studentd ID, name, testScores, and testAvg
+# Put everything in a dict, with student ID as the Keys, and student objects as linked value
+# Prompt for student ID, use to create new student object or change existing
+# If new student: prompt for new studentName, and loop prompt testScores for received student ID\
+# If old student: Ask for change type: name / testScores, and receive related input
+# Make changes to student according to input
+# Re-prompt testScores and studentID until none value returned
 #
 
 def getStudents():
