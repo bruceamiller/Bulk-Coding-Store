@@ -28,10 +28,7 @@ for i in range(1, 18124):
         abundantList.append(i)
 print(abundantList)
 
-abundantNumbers = set()
-for i in range(1, 18124):
-    if sumProperDivisors(i) > i:
-        abundantNumbers.add(i)
+abundantNumbers = set(abundantList)
 
 
 def numIfCannotSum(i):
