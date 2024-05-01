@@ -33,7 +33,7 @@ def getStudents():
     # and the Student object as the value
     #
 
-    file = open("C:\\Users\\Bruce\\Desktop\\Python Coding\\Class Projects\\1300 - MP6 Data.txt")
+    file = open("C:\\Users\\Bruce\\Documents\\GitHub\\Python-Coding\\Class Projects\\1300 - MP6 Data.txt")
     lines = file.readlines()
     file.close()
     for linePos in range(len(lines)):
