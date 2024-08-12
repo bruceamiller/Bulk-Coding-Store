@@ -85,11 +85,9 @@ def printScreen():
                     screen.blit(currentTileText, currentRect)
     pygame.display.update()
 
+
 def revealTile(pos, currentRevealedTiles = []):
-    mouseX = pos[0]
-    mouseY = pos[1]
-    x = (mouseX - tileBorderWidth - SCREEN_BUFFER) // tileSize
-    y = (mouseY - tileBorderWidth - SCREEN_BUFFER) // tileSize
+    x, y = findTileFromPixel(pos)
     if revealedGrid[y][x] == "?":
         revealedGrid[y][x] = hiddenGrid[y][x]
         currentRevealedTiles = currentRevealedTiles + [[x, y]]
@@ -108,6 +106,45 @@ def revealTile(pos, currentRevealedTiles = []):
                                     currentRevealedTiles.append([i, j])
                                     revealedGrid[j][i] = hiddenGrid[j][i]
         return hiddenGrid[y][x]
+    elif not revealedGrid[y][x] in ("?", "0", "F", "X"):
+        autoSurround(pos)
+
+
+def autoSurround(pos):
+    x, y = findTileFromPixel(pos)
+    currentTileVal = revealedGrid[y][x]
+    surroundingFlags = 0
+    for i in range(x - 1, x + 2):
+        for j in range(y - 1, y + 2):
+            if not outOfBounds(i, j) and revealedGrid[j][i] == "F":
+                surroundingFlags += 1
+    if surroundingFlags >= int(currentTileVal):
+        for i in range(x - 1, x + 2):
+            for j in range(y - 1, y + 2):
+                if not outOfBounds(i, j) and revealedGrid[j][i] == "?":
+                    tempX = i * tileSize + tileBorderWidth + SCREEN_BUFFER
+                    tempY = j * tileSize + tileBorderWidth + SCREEN_BUFFER
+                    if revealTile((tempX, tempY)) == "X":
+                        gameEnd = True
+                        print("EXPLODED")
+
+
+
+def outOfBounds(x, y):
+    if x == -1 or x == playWidth or y == -1 or y == playHeight:
+        return True
+    return False
+
+
+
+
+def findTileFromPixel(pos):
+    mouseX = pos[0]
+    mouseY = pos[1]
+    x = (mouseX - tileBorderWidth - SCREEN_BUFFER) // tileSize
+    y = (mouseY - tileBorderWidth - SCREEN_BUFFER) // tileSize
+    return (x, y)
+
 
 
 def flagTile(pos):
@@ -141,7 +178,7 @@ while True:
                         pastFirstMove = True
                     else:
                         hiddenGrid = getBoardGrid()
-                        revealedGrid = revealedGrid = [["?" for i in range(playWidth)] for i in range(playHeight)]
+                        revealedGrid = [["?" for i in range(playWidth)] for i in range(playHeight)]
                 if revealTile(pos) == "X":
                     gameEnd = True
                     print("EXPLODED")
