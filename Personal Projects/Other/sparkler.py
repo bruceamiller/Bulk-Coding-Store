@@ -29,12 +29,15 @@ class Spark():
     def explodedSmallerSparks(self):
         #subSparksAmount = random.randrange(1, int(self._size))
         subSparksAmount = random.randrange(1, 10)
-        subSparkSize = self._size / subSparksAmount
+        subSparkSize = math.sqrt(self._size / subSparksAmount * 3)
         self._size = 0
         subSparks = []
 
         for spark in range(0, subSparksAmount):
-            explosionDistance = random.randrange(explosionSpeedMin, explosionSpeedMax)
+            #Exponential (Creates more smaller Sparks)
+            explosionDistance = (random.random() ** 10) * (explosionSpeedMax - explosionSpeedMin) + explosionSpeedMin
+            #Linear (Creates equal of all spark range)
+            #explosionDistance = random.randrange(explosionSpeedMin, explosionSpeedMax)
             explosionPos = [self._posx + explosionDistance, self._posy]
             explosionPos = rotateAroundCenter(explosionPos, [self._posx, self._posy], random.randrange(0, 360))
             newSpark = Spark(self._posx, self._posy, subSparkSize, explosionPos[0], explosionPos[1])
@@ -57,7 +60,8 @@ class Spark():
     def drawSpark(self):
         # Take spark pos, vel & size -> draw spark trails
 
-        brightColor = (238, 232, 170)
+        #brightColor = (238, 232, 170)
+        brightColor = (255, 255, 255)
         darkColor = (160, 82, 45)
         colorDifference = tuple(brightColor[i] - darkColor[i] for i in range(3))
         currentSparkColor = tuple(darkColor[i] + colorDifference[i] / largeSparkSize * self._size for i in range(3))
@@ -70,7 +74,7 @@ class Spark():
         colorDifference = tuple(brightColor[i] - darkColor[i] for i in range(3))
         currentSparkColor = tuple(darkColor[i] + colorDifference[i] / largeSparkSize * self._size for i in range(3))
 
-        pygame.draw.line(screen, currentSparkColor, (self._posx, self._posy), (self._posx - self._velx / framerate, self._posy - self._vely / framerate), int(self._size))
+        pygame.draw.line(screen, currentSparkColor, (self._posx, self._posy), (self._posx - self._velx / framerate * 2, self._posy - self._vely / framerate * 2), int(self._size))
 
     def update(self):
         gravity = 10
@@ -87,8 +91,8 @@ class Spark():
 
 
 
-screenWidth, screenHeight = 1000, 1000
-screen = pygame.display.set_mode((screenWidth, screenHeight))
+screenWidth, screenHeight = 1200, 800
+screen = pygame.display.set_mode((screenWidth, screenHeight), pygame.RESIZABLE)
 pygame.display.set_caption('Sparkler Sim')
 
 clock = pygame.time.Clock()
@@ -97,9 +101,9 @@ framerate = 60
 sparkSourceX, sparkSourceY = screenWidth // 2, screenHeight // 2
 airResistance = 1
 smallestSparkSize = 0.01
-largeSparkSize = 5
+largeSparkSize = 10
 explosionSpeedMin = 400
-explosionSpeedMax =  800
+explosionSpeedMax =  600
 
 explodeChance = 0.1
 
@@ -130,10 +134,10 @@ while continueSparkling:
     
     for spark in sparkStore:
         spark.drawSpark()
-    newSourceSpark.drawSpark()
     
     for spark in sparkStore:
         spark.drawTrail()
+    newSourceSpark.drawSpark()
 
     sparkStore.extend(newSourceSpark.explodedSmallerSparks())
     
