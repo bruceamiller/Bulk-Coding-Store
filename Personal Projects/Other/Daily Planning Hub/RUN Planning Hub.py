@@ -6,7 +6,9 @@ import Screen_Elements
 
 pygame.init()
 
-screen = pygame.display.set_mode((1200, 800), pygame.RESIZABLE)
+baselineScreenSize = (1278, 668)
+
+screen = pygame.display.set_mode(baselineScreenSize, pygame.RESIZABLE)
 screenMinWidth = 300
 screenMinHeight = 300
 
@@ -16,12 +18,17 @@ pygame.display.set_caption('Daily Hub')
 lastTimeText = getCurrentTime()
 os.system('cls')
 
-font = pygame.font.Font('freesansbold.ttf', 32)
-currentFontSize = 32
+BaselineClockFontSize = 32
+currentClockFontSize = 32
+Clockfont = pygame.font.Font('freesansbold.ttf', currentClockFontSize)
+
 
 """ LOAD INFO """
 
-windows, text = Screen_Elements.getAll(font, 1)
+classInfoTriads = getClassInfo()
+
+windows, text = Screen_Elements.getAll(Clockfont, 1, classInfoTriads)
+
 
 """ MAIN LOOP """
 
@@ -30,29 +37,31 @@ mainLoopContinue = True
 while mainLoopContinue:
 
     """ CONSOLE PRINT DATE. TIME. ETC. """
+    """
     if getCurrentTime() != lastTimeText:
         lastTimeText = getCurrentTime()
         os.system('cls')
         print(lastTimeText)
+    """
 
     """ UPDATE FONT SIZE & Spacing"""
     screenCurrentWidth, screenCurrentHeight = screen.get_size()
-    standardFontSize = maxFontSizeFromWidth = maxFontSizeFromHeight = 32
+    standardFontSize = maxFontSizeFromWidth = maxFontSizeFromHeight = BaselineClockFontSize
     maxScreenSizeAdjustment = 1
-    if screenCurrentWidth < 1278:
-        maxFontSizeFromWidth = int(screenCurrentWidth / 1278 * 32)
-        maxScreenSizeAdjustment = screenCurrentWidth / 1278
-    elif screenCurrentHeight < 668:
-        maxFontSizeFromHeight = int(screenCurrentHeight / 668 * 32)
-        maxScreenSizeAdjustment = screenCurrentWidth / 668
+    if screenCurrentWidth < baselineScreenSize[0]:
+        maxFontSizeFromWidth = int(screenCurrentWidth / baselineScreenSize[0] * BaselineClockFontSize)
+        maxScreenSizeAdjustment = screenCurrentWidth / baselineScreenSize[0]
+    elif screenCurrentHeight < baselineScreenSize[1]:
+        maxFontSizeFromHeight = int(screenCurrentHeight / baselineScreenSize[1] * BaselineClockFontSize)
+        maxScreenSizeAdjustment = screenCurrentWidth / baselineScreenSize[1]
     if  maxFontSizeFromWidth < maxFontSizeFromHeight:
         smallestFontSizeNeededForScreen = maxFontSizeFromWidth
     else:
         smallestFontSizeNeededForScreen = maxFontSizeFromHeight
-    if smallestFontSizeNeededForScreen != currentFontSize:
-        currentFontSize = smallestFontSizeNeededForScreen
-        font = pygame.font.Font('freesansbold.ttf', currentFontSize)
-        windows, text = Screen_Elements.getAll(font, maxScreenSizeAdjustment)
+    if smallestFontSizeNeededForScreen != currentClockFontSize:
+        currentClockFontSize = smallestFontSizeNeededForScreen
+        Clockfont = pygame.font.Font('freesansbold.ttf', currentClockFontSize)
+        windows, text = Screen_Elements.getAll(Clockfont, maxScreenSizeAdjustment, classInfoTriads)
 
 
     """ DRAW SCREEN """
