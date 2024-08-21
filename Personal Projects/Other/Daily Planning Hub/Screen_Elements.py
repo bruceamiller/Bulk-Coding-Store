@@ -12,7 +12,7 @@ def getAll(font, screenSizeAdjustment, classInfoTriads):
     text.append(TextElement(font, getClockText, [0.095, 0.145], letterSpacing = 20 * screenSizeAdjustment))
 
     """ CLASS COUNTDOWN WINDOW"""
-    windows.append(WindowElement([0.75, 0.0], [0.25, 0.625]))
+    windows.append(WindowElement([0.75, 0.0], [0.25, 0.725]))
     
     text.append(TextElement(font, getTimeTillClassesText, [0.875, 0.035], letterSpacing = 20 * screenSizeAdjustment, verticalSpacing = 40, inputForUpdateTextFunc = classInfoTriads))
  
