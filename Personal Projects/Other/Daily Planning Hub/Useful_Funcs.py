@@ -136,7 +136,7 @@ def getClassInfo():
 
 def getTimeTillClassesText(classInfoTriads):
     currentTimeInfo = time.localtime()
-    currentTimeTimer = WeeklyTimer(currentTimeInfo[6], currentTimeInfo[3] + 1, currentTimeInfo[4] ,currentTimeInfo[5])
+    currentTimeTimer = WeeklyTimer(currentTimeInfo[6] + 1, currentTimeInfo[3] + 1, currentTimeInfo[4] ,currentTimeInfo[5])
 
     stringsToPrint = []
 
