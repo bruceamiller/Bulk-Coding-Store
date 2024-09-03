@@ -55,7 +55,7 @@ class Spark():
         self._size -= reduction
 
     def drawSmoke(self):
-        pygame.draw.circle(screen, pygame.Color("grey1"), (self._posx, self._posy), self._size * 5)
+        pygame.draw.circle(screen, pygame.Color("grey15"), (self._posx, self._posy), self._size * 5)
 
     def drawSpark(self):
         # Take spark pos, vel & size -> draw spark trails

@@ -4,7 +4,7 @@ pygame.init()
 
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-difficultyChoice = "Expert"
+difficultyChoice = "Easy"
 difficultyNames = ["Easy", "Intermediate", "Expert"]
 diffInfo = [(9, 9, 10), (16, 16, 40), (30, 16, 99)]
 playWidth, playHeight, mineAmount = diffInfo[difficultyNames.index(difficultyChoice)]

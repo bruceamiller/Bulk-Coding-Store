@@ -4,7 +4,7 @@ def initializePygame(gameName):
     pygame.init()
 
     global SCREEN_WIDTH, SCREEN_HEIGHT, FPS, SCREEN_BUFFER
-    SCREEN_WIDTH, SCREEN_HEIGHT = 2500, 1200
+    SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
     FPS = 60
     SCREEN_BUFFER = 500
 
