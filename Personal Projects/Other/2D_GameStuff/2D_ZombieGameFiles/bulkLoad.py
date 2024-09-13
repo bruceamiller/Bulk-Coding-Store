@@ -15,7 +15,7 @@ def loadMapInfo():
     #floorObjects.append(Floor([500, 200], [900, 600], "thistle1")) #Kitchen Floor
     #floorObjects.append(Floor([500, 600], [900, 850], "grey33")) #Storage
     #floorObjects.append(Floor([150, 500], [500, 850], "grey5")) #Front Bathroom
-    backgroundImage = pygame.image.load("C:\\Users\\Bruce\\Documents\\GitHub\\Python-Coding\\Personal Projects\\Other\\2D_GameStuff\\2D_ZombieGameFiles\\Images\\HouseDrawn.png").convert()
+    backgroundImage = pygame.image.load(r"C:\Users\Bruce\Desktop\Python Coding\Personal Projects\Other\2D_GameStuff\2D_ZombieGameFiles\Images\HouseDrawn.png").convert()
     backgroundFloorObject = Floor([-940.5, -438], [0,0])
     backgroundFloorObject.setImage(backgroundImage)
     objects.append(backgroundFloorObject)
