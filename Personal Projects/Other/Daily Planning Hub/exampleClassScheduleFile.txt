@@ -1,7 +1,0 @@
-Class Name: Class 1
-Weekdays: Mon Wed Fri
-Time: 12:00 - 12:50
-
-Class Name: Class 2
-Weekdays: Mon Tue Wed Thu
-Time: 14:10 - 15:00
