@@ -1,8 +1,15 @@
 #include <iostream>
 
+// #define DEBUG
+
 using namespace std;
 
 int main() {
+    bool debugMode = false;
+    #ifdef DEBUG
+        debugMode = true;
+    #endif
+    
     int inputVal = 0;
     int intStore[10] = {};
     int intStorePos = 0;
@@ -32,14 +39,18 @@ int main() {
                 currentNumberPos++;
                 currentNumberChecking = intStore[currentNumberPos];
             }
-            /*
-            cout << "List: ";
-            for (int i = 0; i <= 10; i++) {
-                cout  << intStore[i] << " ";
+            
+            if (debugMode) {
+                cout << "List: ";
+                for (int i = 0; i <= 10; i++) {
+                    cout  << intStore[i] << " ";
+                }
+                cout << "| ";
             }
-            cout << "|" << doubles << endl;
+
+            cout << doubles << endl;
             newArray = true;
-            */
+            
         } else {
             intStore[intStorePos] = inputVal;
             intStorePos += 1;
