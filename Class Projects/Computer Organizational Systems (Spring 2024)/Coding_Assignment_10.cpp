@@ -98,3 +98,28 @@ class SinglyLinkedList {
             }
         }
 };
+
+int main() {
+    SinglyLinkedList list;
+
+    list.push_back(10);
+    list.push_front(20);
+    list.push_back(30);
+    list.push_back(40);
+    list.push_front(50);
+
+    cout << "List after push operations: ";
+    list.printList();
+
+    cout << "Size of the list: " << list.size() << endl;
+    cout << "Is the list empty? " << (list.empty() ? "Yes" : "No") << endl;
+    
+    cout << "Front of the list: " << list.front() << endl;
+    cout << "Back of the lsit: " << list.back() << endl;
+
+    list.pop_front();
+    cout << "List after pop_front: ";
+    list.printList();
+
+    return 0;
+}
