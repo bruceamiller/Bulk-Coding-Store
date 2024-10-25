@@ -1,32 +1,19 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class MyClass {
-    private:
-        int value;
-    public:
-        MyClass(int value) {
-            this->value = value;
-        }
-        
-        void display() {
-            cout << "Value: " << this->value << endl;
-        }
+int main() {
+    vector<int> myIntVector;
+    vector<int>::iterator it;
 
-        MyClass& setValue(int value) {
-            this->value = value;
-            
-            return *this;
-        }
-};
+    for (int i = 1; i <= 5; i++) myIntVector.push_back(i);
 
+    cout << "myVector contains: " ;
+    for (it = myIntVector.begin(); it != myIntVector.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << endl;
 
-
-int main () {
-    MyClass test(1);
-    test.display();
-
-    test.setValue(2);
-    test.display();
     return 0;
+
 }
