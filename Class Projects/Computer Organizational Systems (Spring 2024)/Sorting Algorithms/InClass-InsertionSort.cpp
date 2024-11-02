@@ -17,7 +17,7 @@ void InsertionSort(int A[], int n) {
 
 
 int main() {
-    int A[] = {2, 7, 4, 1, 5, 3};
+    int A[] = {90, 17, 88, 22, 5, 82};
     int n = sizeof(A)/sizeof(0);
 
     InsertionSort(A, n);

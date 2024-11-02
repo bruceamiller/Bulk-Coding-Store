@@ -19,7 +19,7 @@ void SelectionSort(int A[], int n) {
 
 
 int main() {
-    int A[] = {2, 7, 4, 1, 5, 3};
+    int A[] = {10, 2, 78, 4, 45, 32, 7, 11};
     int n = sizeof(A)/sizeof(0);
 
     SelectionSort(A, n);

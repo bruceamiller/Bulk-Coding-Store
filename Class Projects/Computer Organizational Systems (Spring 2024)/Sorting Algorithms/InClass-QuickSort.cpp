@@ -31,7 +31,7 @@ int Partition(int array[], int low, int high) {
     return pivotIndex;
 }
 
-int main() {
+int main() {https://www.youtube.com/watch?v=ZACCZpkX53o
     int A[] = {2, 7, 1, 6, 8, 5, 3, 4};
     int length = sizeof(A)/sizeof(0);
 
