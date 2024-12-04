@@ -1,11 +1,45 @@
 #include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
+#include <string>
+#include <sstream>
+#include <cmath>
 using namespace std;
 
 void MergeSort(vector<int>& array);
 void MergeSortRecursion(vector<int>& array, int l, int r);
 void MergeSortedArraysV1 (vector<int>& array, int l, int m, int r);
+
+int main() {
+    ifstream inputFile("AOC1.txt");
+    string inputString;
+
+    vector<int> leftList;
+    vector<int> rightList;
+
+    int newLeft;
+    int newRight;
+
+    //Get all values
+    while (getline(inputFile, inputString)) {
+        istringstream inputStream(inputString);
+        inputStream >> newLeft >> newRight;
+        leftList.push_back(newLeft);
+        rightList.push_back(newRight);
+    }
+
+    //Sort values in both lists
+    MergeSort(leftList);
+    MergeSort(rightList);
+
+    //Compare both lists
+    int sum = 0;
+    for (int i = 0; i < leftList.size(); i++)
+        sum += abs(rightList[i] - leftList[i]); // Absolute value, might need fix?
+    cout << sum;
+
+    return 0;
+}
+
 
 void MergeSort(vector<int>& array) {
     int length = array.size();
@@ -64,19 +98,4 @@ void MergeSortedArraysV1(vector<int>& array, int l, int m, int r) {
     }
 
 
-}
-
-int main() {
-    vector<int> A = {7, 2, 1, 6, 8, 5, 3, 4};
-    int length = A.size();
-
-    MergeSort(A);
-
-
-    for (int i = 0; i < length; i++) {
-        cout << A[i] << " ";
-    }
-    cout << endl;
-
-    return 0;
 }
